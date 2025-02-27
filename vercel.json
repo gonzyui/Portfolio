@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/sitemap", "dest": "/api/sitemap.ts" }
-  ],
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" }
   ],
