@@ -14,6 +14,7 @@ import {
 
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import SEO from "@/components/SEO";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -82,63 +83,66 @@ export default function Skills({ languageData }: { languageData: LanguageStats }
     };
 
     return (
-        <section className="min-h-screen bg-gray-900 text-white px-6 py-10">
-            <h1 className="text-4xl font-bold text-center mb-8">Skills & Stats</h1>
+        <>
+            <SEO title="Skills | Gonzyui" description="Discover my skills." />
+            <section className="min-h-screen bg-gray-900 text-white px-6 py-10">
+                <h1 className="text-4xl font-bold text-center mb-8">Skills & Stats</h1>
 
-            <div className="flex flex-wrap justify-center gap-10 mb-12">
-                <motion.div
-                    className="bg-gray-800 p-6 rounded-lg shadow-lg w-80"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <h2 className="text-2xl font-semibold text-center mb-4">Most Used Languages</h2>
-                    <Doughnut data={chartData} />
-                </motion.div>
+                <div className="flex flex-wrap justify-center gap-10 mb-12">
+                    <motion.div
+                        className="bg-gray-800 p-6 rounded-lg shadow-lg w-80"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className="text-2xl font-semibold text-center mb-4">Most Used Languages</h2>
+                        <Doughnut data={chartData} />
+                    </motion.div>
 
-                <motion.div
-                    className="bg-gray-800 p-6 rounded-lg shadow-lg w-80"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <h2 className="text-2xl font-semibold text-center mb-4">Mastery Levels</h2>
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                        <tr className="border-b border-gray-700">
-                            <th className="py-2">Language</th>
-                            <th className="py-2">Mastery (%)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {skillLevels.map(({ language, level }) => (
-                            <tr key={language} className="border-b border-gray-700">
-                                <td className="py-2">{language}</td>
-                                <td className="py-2">
-                                    <div className="w-full bg-gray-700 rounded-full h-3">
-                                        <div className="bg-blue-500 h-3 rounded-full" style={{ width: `${level}%` }}></div>
-                                    </div>
-                                    <span className="text-sm text-gray-300">{level}%</span>
-                                </td>
+                    <motion.div
+                        className="bg-gray-800 p-6 rounded-lg shadow-lg w-80"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className="text-2xl font-semibold text-center mb-4">Mastery Levels</h2>
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                            <tr className="border-b border-gray-700">
+                                <th className="py-2">Language</th>
+                                <th className="py-2">Mastery (%)</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </motion.div>
-            </div>
+                            </thead>
+                            <tbody>
+                            {skillLevels.map(({ language, level }) => (
+                                <tr key={language} className="border-b border-gray-700">
+                                    <td className="py-2">{language}</td>
+                                    <td className="py-2">
+                                        <div className="w-full bg-gray-700 rounded-full h-3">
+                                            <div className="bg-blue-500 h-3 rounded-full" style={{ width: `${level}%` }}></div>
+                                        </div>
+                                        <span className="text-sm text-gray-300">{level}%</span>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </motion.div>
+                </div>
 
-            <motion.div className="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-semibold text-center mb-4">Other Notable Skills</h2>
-                <Slider {...sliderSettings}>
-                    {otherSkills.map(({ name, icon }, index) => (
-                        <div key={index} className="flex flex-col items-center justify-center p-4 ml-10">
-                            {icon}
-                            <h3 className="text-lg font-semibold mt-2">{name}</h3>
-                        </div>
-                    ))}
-                </Slider>
-            </motion.div>
-        </section>
+                <motion.div className="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h2 className="text-2xl font-semibold text-center mb-4">Other Notable Skills</h2>
+                    <Slider {...sliderSettings}>
+                        {otherSkills.map(({ name, icon }, index) => (
+                            <div key={index} className="flex flex-col items-center justify-center p-4 ml-10">
+                                {icon}
+                                <h3 className="text-lg font-semibold mt-2">{name}</h3>
+                            </div>
+                        ))}
+                    </Slider>
+                </motion.div>
+            </section>
+        </>
     );
 }
 
