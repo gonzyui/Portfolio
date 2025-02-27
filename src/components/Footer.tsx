@@ -13,7 +13,7 @@ const links = [
     { href: "https://ko-fi.com/gonzyui", icon: <FaCoffee />, label: "Ko-Fi", external: true },
     { href: "https://discord.com/channels/users/1313488187330531399", icon: <FaDiscord />, label: "Discord", external: true },
     { href: "https://bsky.app/profile/gonzyuidev.yz", icon: <FaBluesky />, label: "BlueSky", external: true },
-    { href: "https://anime8.tech", icon: <FaRobot />, label: "RecommenderNET", external: true },
+    { href: "https://anime8.tech", icon: <FaRobot />, label: "Luminet", external: true },
 ];
 
 const Footer: React.FC = () => {
