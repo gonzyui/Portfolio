@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import {
     FaBars, FaTimes, FaHome, FaProjectDiagram, FaChartPie,
-    FaGithub, FaDiscord, FaCoffee, FaRobot
+    FaGithub, FaDiscord, FaCoffee
 } from "react-icons/fa";
 import { FaBluesky, FaForumbee } from "react-icons/fa6";
 
@@ -67,7 +67,6 @@ export default function Sidebar() {
                             { href: "https://ko-fi.com/gonzyui", icon: <FaCoffee size={20} /> },
                             { href: "https://discord.com/channels/users/1313488187330531399", icon: <FaDiscord size={20} /> },
                             { href: "https://bsky.app/profile/gonzyuidev.yz", icon: <FaBluesky size={20} /> },
-                            { href: "https://anime8.tech", icon: <FaRobot size={20} /> },
                         ].map(({ href, icon }) => (
                             <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition">
                                 {icon}

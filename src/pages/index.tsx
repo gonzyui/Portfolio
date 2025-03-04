@@ -10,31 +10,44 @@ export default function Home() {
   const [text, setText] = useState("");
   const [deleting, setDeleting] = useState(false);
 
+  const typeSpeed = 120;
+  const deleteSpeed = 50;
+  const pauseDelay = 1000;
+
   useEffect(() => {
     const currentWord = words[index];
-    const speed = deleting ? 50 : 120;
+    let timeout: NodeJS.Timeout;
 
-    const updateText = () => {
-      setText(deleting ? currentWord.slice(0, text.length - 1) : currentWord.slice(0, text.length + 1));
+    if (!deleting && text !== currentWord) {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length + 1));
+      }, typeSpeed);
+    } else if (!deleting && text === currentWord) {
+      timeout = setTimeout(() => {
+        setDeleting(true);
+      }, pauseDelay);
+    } else if (deleting && text !== "") {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length - 1));
+      }, deleteSpeed);
+    } else if (deleting && text === "") {
+      setDeleting(false);
+      setIndex((prev) => (prev + 1) % words.length);
+    }
 
-      if (!deleting && text === currentWord) setTimeout(() => setDeleting(true), 1000);
-      if (deleting && text === "") {
-        setDeleting(false);
-        setIndex((prev) => (prev + 1) % words.length);
-      }
-    };
-
-    const timeout = setTimeout(updateText, speed);
     return () => clearTimeout(timeout);
   }, [text, deleting, index]);
 
   return (
       <>
-        <SEO title="Gonzyui | Developer Portfolio" description="Full-stack developer passionate about AI, Python, TypeScript, and anime/manga applications." />
+        <SEO
+            title="Gonzyui | Developer Portfolio"
+            description="Full-stack developer passionate about AI, Python, TypeScript, and anime/manga applications."
+        />
         <section className="h-screen flex flex-col justify-center items-center text-center bg-gray-900 text-white px-6">
           <motion.h1 className="text-5xl font-bold mb-4">
             Hi, I'm <span className="text-blue-500">{text}</span>
-            <motion.span className="animate-blink">|</motion.span>
+            <motion.span className="animate-blink inline-block">|</motion.span>
           </motion.h1>
 
           <motion.p className="text-lg text-gray-300 max-w-2xl mb-6">
@@ -45,7 +58,7 @@ export default function Home() {
           </motion.p>
 
           <Link href="/projects" className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition">
-            View My Projects
+              View My Projects
           </Link>
         </section>
       </>

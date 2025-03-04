@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, JSX } from "react";
+import { useState, useMemo, useCallback, useEffect, JSX } from "react";
 import SEO from "@/components/SEO";
 import {
     FaStar, FaCodeBranch, FaExternalLinkAlt, FaChevronDown
@@ -33,8 +33,11 @@ export default function Projects({ repos }: { repos: Repo[] }) {
     const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
 
-    const allLanguages = useMemo(() => Array.from(new Set(repos.flatMap(repo => repo.languages))), [repos]);
+    const allLanguages = useMemo(() =>
+        Array.from(new Set(repos.flatMap(repo => repo.languages))), [repos]);
 
     const filteredRepos = useMemo(() =>
         repos.filter(({ name, description, languages }) =>
@@ -42,6 +45,16 @@ export default function Projects({ repos }: { repos: Repo[] }) {
             (name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 description?.toLowerCase().includes(searchQuery.toLowerCase()))
         ), [repos, selectedLanguage, searchQuery]);
+
+    // Reset pagination when filter/search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedLanguage, searchQuery]);
+
+    // Pagination logic
+    const totalPages = Math.ceil(filteredRepos.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedRepos = filteredRepos.slice(startIndex, startIndex + itemsPerPage);
 
     const handleLanguageSelect = useCallback((lang: string | null) => {
         setSelectedLanguage(lang);
@@ -99,7 +112,7 @@ export default function Projects({ repos }: { repos: Repo[] }) {
                 </div>
 
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-                    {filteredRepos.map(({ id, name, html_url, description, languages, stargazers_count, forks_count }) => (
+                    {paginatedRepos.map(({ id, name, html_url, description, languages, stargazers_count, forks_count }) => (
                         <div key={id} className="bg-gray-800 p-5 rounded-lg shadow-md border border-gray-700 transition-transform hover:scale-105 hover:shadow-xl w-72 mx-auto">
                             <h2 className="text-xl font-semibold text-blue-400 mb-2 truncate">{name}</h2>
                             <p className="text-gray-400 text-sm mb-3 h-14 overflow-hidden">{description || "No description available."}</p>
@@ -122,6 +135,37 @@ export default function Projects({ repos }: { repos: Repo[] }) {
                         </div>
                     ))}
                 </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                    <div className="mt-8 flex items-center gap-4">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-600' : 'bg-blue-500 hover:bg-blue-600'} transition`}
+                        >
+                            Previous
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, idx) => idx + 1).map(page => (
+                            <button
+                                key={page}
+                                onClick={() => setCurrentPage(page)}
+                                className={`px-4 py-2 rounded-lg ${page === currentPage ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'} transition`}
+                            >
+                                {page}
+                            </button>
+                        ))}
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-600' : 'bg-blue-500 hover:bg-blue-600'} transition`}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </section>
         </>
     );

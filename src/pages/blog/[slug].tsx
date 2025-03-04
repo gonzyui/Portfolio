@@ -20,7 +20,7 @@ export default function BlogPost({ post }: { post: BlogPost }) {
         <>
             <SEO title={`${post.title} | Gonzyui`} description={post.description} />
 
-            <section className="min-h-screen bg-gray-900 text-white px-6 py-16 flex justify-center mb-20">
+            <section className="min-h-screen bg-gray-900 text-white px-6 py-16 flex justify-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}

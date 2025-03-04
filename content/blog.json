@@ -5,5 +5,12 @@
       "description": "A new space to share my thoughts, projects, and tech insights!",
       "date": "2025-02-27",
       "tags": ["Next.js", "Blog", "Portfolio"]
+    },
+    {
+      "title": "Niji API",
+      "slug": "niji-api",
+      "description": "Discover a new API that serves high-quality images from your favorite anime and manga series.",
+      "date": "2025-03-04",
+      "tags": ["API", "Anime", "Manga", "Tech", "Art"]
     }
-  ]
+]

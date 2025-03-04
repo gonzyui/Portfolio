@@ -1,4 +1,4 @@
-import { FaGithub, FaDiscord, FaCoffee, FaRobot } from "react-icons/fa";
+import { FaGithub, FaDiscord, FaCoffee } from "react-icons/fa";
 import { FaBluesky, FaForumbee } from "react-icons/fa6";
 import { AiOutlineProject } from "react-icons/ai";
 import { GiSkills } from "react-icons/gi";
@@ -13,14 +13,13 @@ const links = [
     { href: "https://ko-fi.com/gonzyui", icon: <FaCoffee />, label: "Ko-Fi", external: true },
     { href: "https://discord.com/channels/users/1313488187330531399", icon: <FaDiscord />, label: "Discord", external: true },
     { href: "https://bsky.app/profile/gonzyuidev.yz", icon: <FaBluesky />, label: "BlueSky", external: true },
-    { href: "https://anime8.tech", icon: <FaRobot />, label: "Luminet", external: true },
 ];
 
 const Footer: React.FC = () => {
     return (
-            <footer className="hidden sm:block fixed mt-auto bottom-0 w-full bg-gray-900 text-gray-400 py-6 text-center">
-                <p className="mb-4 text-sm sm:text-base">© 2025 - gonzyui. All rights reserved.</p>
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+        <footer className="fixed bottom-0 left-0 w-full bg-gray-900 text-gray-400 py-2 px-2 text-center z-50">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-wrap items-center justify-center gap-3">
                     {links.map(({ href, icon, label, external }) =>
                         external ? (
                             <a
@@ -28,19 +27,23 @@ const Footer: React.FC = () => {
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-white transition flex items-center gap-1"
+                                className="hover:text-white transition flex items-center gap-1 text-xs"
                                 aria-label={label}
                             >
-                                {icon} {label}
+                                {icon}
+                                <span className="hidden sm:inline">{label}</span>
                             </a>
                         ) : (
-                            <Link key={label} href={href} className="hover:text-white transition flex items-center gap-1">
-                                {icon} {label}
+                            <Link key={label} href={href} className="hover:text-white transition flex items-center gap-1 text-xs">
+                                    {icon}
+                                    <span className="hidden sm:inline">{label}</span>
                             </Link>
                         )
                     )}
                 </div>
-            </footer>
+                <p className="mt-1 text-[10px] sm:text-xs">© 2025 - gonzyui. All rights reserved.</p>
+            </div>
+        </footer>
     );
 };
 
